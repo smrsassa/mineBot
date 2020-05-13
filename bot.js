@@ -2,10 +2,15 @@ const Discord = require("discord.js");
 const jimp = require('jimp');
 const client = new Discord.Client();
 const config = require("./config.json");
+const fs = require("fs");
 
 client.on("ready", () => {
   console.log(`bot foi iniciado, com ${client.users.cache.size} usuarios, em ${client.channels.cache.size} canais, em ${client.guilds.cache.size} servidores`);
-  client.user.setActivity(`Eu estou em ${client.guilds.cache.size} servidores`);
+
+  //Trocando status / atividade do bot
+  client.user.setStatus("online");
+  client.user.setActivity("Minecraft", { type: "WATCHING"})
+
 });
 
 client.on("guildCreate", guild => {
