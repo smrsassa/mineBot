@@ -4,13 +4,20 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
 
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('./database/database.json');
+const db = low(adapter);
+
 client.on("ready", () => {
   console.log(`bot foi iniciado, com ${client.users.cache.size} usuarios, em ${client.channels.cache.size} canais, em ${client.guilds.cache.size} servidores`);
 
   //Trocando status / atividade do bot
   client.user.setStatus("online");
-  client.user.setActivity("Minecraft", { type: "WATCHING"})
+  client.user.setActivity("Minecraft", { type: "WATCHING" })
 
+  // Set some defaults (required if your JSON file is empty)
+  db.defaults({ locations: [], seeds: [], ToDo: [] }).write()
 });
 
 client.on("guildCreate", guild => {
@@ -22,39 +29,15 @@ client.on("guildDelete", guild => {
   console.log(`O bot foi removido do servidor: ${guilds.name} (id: ${guilds.id})`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
-/* Enviar imagem de bem vindo
-client.on("guildMemberAdd", async member => {
 
-  let canal = client.channels.get("705225611878203505")
-  let fonte = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
-  let masc = await jimp.read('img/mascara.png');
-  let fundo = await jimp.read('img/fundo.png');
-
-  jimp.read(member.user.displayAvatarURL)
-    .then(avatar => {
-
-      avatar.resize(130, 130);
-      masc.resize(130, 130);
-      avatar.mask(masc);
-
-      fundo.print(fonte, 180, 175, member.user.username);
-
-      fundo.composite(avatar, 30, 30).write('users_img/bemvindo.png');
-
-      canal.send(``, { files: ["bemvindo.png"] });
-
-    })
-    .catch(err => {
-      console.log('ERRO: erro ao carregar a imagem (jimp.js)');
-    });
-
-});
-*/
 client.on('message', message => {
-  if (message.content === '!casa') {
-    message.channel.send('X: 546 Y: 64 Z: 123 | Comando: /tp 546 64 123');
-  }
-  if (message.content === 'what is my avatar') {
+
+  let fullMsg = message.content
+  let comando = comando.split(" ")[0];
+  let pedido = comando.split(" ")[1];
+
+  //message.channel.send('X: 546 Y: 64 Z: 123 | Comando: /tp 546 64 123');
+  if (comando === 'what is my avatar') {
     // Send the user's avatar URL
     message.reply(message.author.displayAvatarURL());
   }
