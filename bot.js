@@ -79,8 +79,18 @@ client.on('message', message => {
     }
   }
 
+  if ( comando === '!delcord' ) {
+    let nome_coord = fullMsg.split(" ")[1];
+
+    db.get('locations')
+      .remove({ nome: nome_coord })
+      .write()
+
+      message.reply('Coordenada '+nome_coord+' foi deletada');
+  }
+
   //message.channel.send('X: 546 Y: 64 Z: 123 | Comando: /tp 546 64 123');
-  if (comando === 'what is my avatar') {
+  if (fullMsg === 'what is my avatar') {
     // Send the user's avatar URL
     message.reply(message.author.displayAvatarURL());
   }
