@@ -79,6 +79,50 @@ client.on('message', message => {
     }
   }
 
+  if ( comando === '!upcord' ) {
+    let valor_alterado = fullMsg.split(" ")[1];
+    let nome_coord = fullMsg.split(" ")[2];
+    let valor_atualizado = fullMsg.split(" ")[3];
+
+    switch (valor_alterado) {
+      case "nome": case "Nome": case "NOME":
+        db.get('locations')
+          .find({ nome: nome_coord })
+          .assign({nome: valor_atualizado})
+          .write();
+
+        message.reply('Nome da coordenada foi atualizado');
+        break;
+      case "X": case "x":
+        db.get('locations')
+          .find({ nome: nome_coord })
+          .assign({X: valor_atualizado})
+          .write();
+
+        message.reply('Coordenada X foi atualizado');
+        break;
+      case "Y": case "y":
+        db.get('locations')
+          .find({ nome: nome_coord })
+          .assign({Y: valor_atualizado})
+          .write();
+
+        message.reply('Coordenada Y foi atualizado');
+        break;
+      case "Z": case "z":
+        db.get('locations')
+          .find({ nome: nome_coord })
+          .assign({Z: valor_atualizado})
+          .write();
+
+        message.reply('Coordenada Z foi atualizado');
+        break;
+      default:
+        message.reply(valor_alterado);
+        break;
+    }
+  }
+
   if ( comando === '!delcord' ) {
     let nome_coord = fullMsg.split(" ")[1];
 
