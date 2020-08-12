@@ -55,7 +55,32 @@ client.on('message', message => {
         { name: 'Apagar uma seed', value: '!delseed {nome da seed}' }
 	    )
 	    .setFooter('Acesse o projeto no github para me dar mais ideias sugestões ', 'https://shifter.sapo.pt/wp-content/uploads/2020/04/GitHub-Gratuito-Shifter_01.jpg');
+    message.reply(exampleEmbed);
+  }
+
+  if ( comando === '!cord' ) {
+    let nome_coord = fullMsg.split(" ")[1];
+
+    if ( nome_coord != undefined ) {
+      let row = db.get('locations').find({nome: nome_coord}).value();
+    
+      message.reply('X: '+row.X+' Y: '+row.Y+' Z: '+row.Z+' | Comando: /tp '+row.X+' '+row.Y+' '+row.Z);
+    } else {
+      let rows = db.get('locations').value();
+
+      function allFields() {
+        for ( var c = 0; c <= rows.length; c++) {
+          return {name: rows[c].nome, value: 'X: '+rows[c].X+' Y: '+rows[c].Y+' Z: '+rows[c].Z};
+        }
+      }
+
+      const exampleEmbed = new Discord.MessageEmbed()
+	      .setColor('#006600')
+	      .setTitle('Todas as coordenadas')
+	      .addFields(allFields())
       message.reply(exampleEmbed);
+      console.log(allFields());
+    }
   }
 
   if ( comando === '!addcord' ) {
@@ -133,7 +158,6 @@ client.on('message', message => {
       message.reply('Coordenada '+nome_coord+' foi deletada');
   }
 
-  //message.channel.send('X: 546 Y: 64 Z: 123 | Comando: /tp 546 64 123');
   if (fullMsg === 'what is my avatar') {
     // Send the user's avatar URL
     message.reply(message.author.displayAvatarURL());
