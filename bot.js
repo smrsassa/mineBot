@@ -1,9 +1,10 @@
+// Discord.js
 const Discord = require("discord.js");
 const jimp = require('jimp');
 const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
-
+// LowDB
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { isNumber } = require("util");
@@ -38,6 +39,7 @@ client.on('message', message => {
   let arrComando = fullMsg.split(" ");
 
   if ( comando === '!help' ) {
+
     const exampleEmbed = new Discord.MessageEmbed()
 	    .setColor('#006600')
 	    .setTitle('Vou te ajudar com os comandos!')
@@ -67,19 +69,19 @@ client.on('message', message => {
       message.reply('X: '+row.X+' Y: '+row.Y+' Z: '+row.Z+' | Comando: /tp '+row.X+' '+row.Y+' '+row.Z);
     } else {
       let rows = db.get('locations').value();
+      let arrayRows = [];
 
-      function allFields() {
-        for ( var c = 0; c <= rows.length; c++) {
-          return {name: rows[c].nome, value: 'X: '+rows[c].X+' Y: '+rows[c].Y+' Z: '+rows[c].Z};
-        }
+      for ( var c = 0; c < rows.length; c++) {
+        arrayRows.push({name: rows[c].nome, value: 'X: '+rows[c].X+' Y: '+rows[c].Y+' Z: '+rows[c].Z});
       }
 
-      const exampleEmbed = new Discord.MessageEmbed()
-	      .setColor('#006600')
-	      .setTitle('Todas as coordenadas')
-	      .addFields(allFields())
-      message.reply(exampleEmbed);
-      console.log(allFields());
+      let objEmbed = {
+        color: 0x0099ff,
+        title: 'Todas as coordenadas',
+        fields: arrayRows
+      };
+
+      message.reply({ embed: objEmbed });
     }
   }
 
