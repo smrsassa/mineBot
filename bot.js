@@ -25,6 +25,10 @@ client.on('message', message => {
   let fullMsg = message.content
   let comando = fullMsg.split(" ")[0];
 
+  if ( comando === '!help' ) {
+    msg.seehelp(Discord ,message);
+  }
+
   // Comandos que envolvem coordenadas
   if ( comando === '!cord' ) {
     coord.seecord(fullMsg, message, db);
@@ -42,11 +46,11 @@ client.on('message', message => {
     coord.deletarcord(fullMsg, message, db)
   }
 
-  if (fullMsg === '!cheat') {
+  if ( comando === '!cheat' ) {
     msg.seecheats(Discord ,message);
   }
 
-  if (fullMsg === 'what is my avatar') {
+  if ( fullMsg === 'what is my avatar' ) {
     message.reply(message.author.displayAvatarURL());
   }
 });

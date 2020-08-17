@@ -1,4 +1,4 @@
-module.exports.seecord = function () {
+module.exports.seehelp = function (Discord, message) {
   const indexEmbed = new Discord.MessageEmbed()
 	  .setColor('#006600')
 	  .setTitle('Vou te ajudar com os comandos!')
