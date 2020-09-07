@@ -43,15 +43,11 @@ client.on('message', message => {
   }
 
   if ( comando === '!delcord' ) {
-    coord.deletarcord(fullMsg, message, db)
+    coord.deletarcord(fullMsg, message, db);
   }
 
   if ( comando === '!cheat' ) {
     msg.seecheats(Discord ,message);
-  }
-
-  if ( fullMsg === 'what is my avatar' ) {
-    message.reply(message.author.displayAvatarURL());
   }
 });
 

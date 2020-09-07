@@ -3,7 +3,6 @@ module.exports.seehelp = function (Discord, message) {
 	  .setColor('#006600')
 	  .setTitle('Vou te ajudar com os comandos!')
 	  .setDescription('Troque para os valores os textos e {}')
-	  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
 	  .addFields(
       { name: 'Coordenadas', value: 'Todos os comandos relacionados a coordenadas' },
       { name: 'Ver uma coordenada(para ver todas de o comando sem indicar o nome)', value: '!cord {Nome da coord}' },
